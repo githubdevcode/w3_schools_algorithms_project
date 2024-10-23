@@ -1,6 +1,7 @@
 package com.dsa.algorithms.runtime;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
 import com.dsa.algorithms.AlgorithmsApplication;
 import com.dsa.algorithms.tree.dto.AdjacencyMatrix;
+import com.dsa.algorithms.tree.dto.Graph;
 import com.dsa.algorithms.tree.service.GraphService;
 
 /**
@@ -82,12 +84,57 @@ public class GraphTest {
 	/**
 	 * @fuente https://www.w3schools.com/dsa/dsa_data_graphs_implementation.php (A basic graph implementation)
 	 * */
+	@Disabled
 	@Test
 	public void whenThereIsAnUndirectedAdjacencyMatrixGraph_thenShowTheEdgesAndVertexesFromIt() {
 		System.out.println("An Undirected AdjacencyMatrixGraph ShowTheEdgesAndVertexes");
 		graphService.printAdjacencyMatrix(undirectedAdjacencyMatrixForFirstExample);
 		System.out.print("\n");
 		graphService.printConnections(undirectedAdjacencyMatrixForFirstExample);
+		System.out.print("\n");
+	}
+	
+	/**
+	 * @fuente https://www.w3schools.com/dsa/dsa_data_graphs_implementation.php (Graph implementation using classes)
+	 * */
+	@Test
+	public void whenThereIsAnUndirectedAdjacencyMatrixGraphImplementationUsingClasses_thenShowTheEdgesAndVertexesFromIt() {
+		System.out.println("An Undirected AdjacencyMatrixGraphImplementationUsingClasses ShowTheEdgesAndVertexes");
+		
+		Graph graph = new Graph(4);
+		graphService.addVertexData(0, 'A', graph);
+		graphService.addVertexData(1, 'B', graph);
+		graphService.addVertexData(2, 'C', graph);
+		graphService.addVertexData(3, 'D', graph);
+		graphService.addUndirectedAdjacencyMatrixEdge(0, 1, graph);  // A - B
+		graphService.addUndirectedAdjacencyMatrixEdge(0, 2, graph);  // A - C
+		graphService.addUndirectedAdjacencyMatrixEdge(0, 3, graph);  // A - D
+		graphService.addUndirectedAdjacencyMatrixEdge(1, 2, graph);  // B - C
+
+		graphService.printAdjacencyMatrixGraph(graph);
+		System.out.print("\n");
+	}
+	
+	/**
+	 * @fuente https://www.w3schools.com/dsa/dsa_data_graphs_implementation.php (Implementation of directed and weighted graphs)
+	 * */
+	@Test
+	public void whenThereIsAnDirectedAdjacencyMatrixGraphWithWeightImplementationUsingClasses_thenShowTheEdgesAndVertexesFromIt() {
+		System.out.println("A Directed AdjacencyMatrixGraphWithWeightImplementationUsingClasses ShowTheEdgesAndVertexes");
+		
+		Graph graph = new Graph(4);
+		graphService.addVertexData(0, 'A', graph);
+		graphService.addVertexData(1, 'B', graph);
+		graphService.addVertexData(2, 'C', graph);
+		graphService.addVertexData(3, 'D', graph);
+		/* the adjacency matrix edge is not symmetric anymore. addDirectedAdjacencyMatrixEdgeWithWeight method has one line less
+		 * than addUndirectedAdjacencyMatrixEdge */
+		graphService.addDirectedAdjacencyMatrixEdgeWithWeight(0, 1, 3, graph);  // A - B
+		graphService.addDirectedAdjacencyMatrixEdgeWithWeight(0, 2, 2, graph);  // A - C
+		graphService.addDirectedAdjacencyMatrixEdgeWithWeight(3, 0, 4, graph);  // A - D
+		graphService.addDirectedAdjacencyMatrixEdgeWithWeight(2, 1, 1, graph);  // B - C
+		
+		graphService.printAdjacencyMatrixGraph(graph);
 		System.out.print("\n");
 	}
 	
